@@ -29,7 +29,10 @@ class ProductsAdapter(context: Context, private var products: List<Product>) :
 
         binding.tvProductName.text = products[position].name
         binding.tvProductDetails.text = products[position].details
-        binding.tvProductPrice.text = products[position].price.toString()
+        binding.tvProductPrice.text = String.format(context.getString(R.string.product_price),
+            products[position].price.toString())
+        binding.tvProductPriceSecond.text = String.format(context.getString(R.string.product_price),
+            products[position].price.toString())
         Glide.with(context).load(products[position].mainImage)
             .into(binding.ivProduct)
 
