@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="productName">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#07195C</item>
+        <item name="fontFamily">@font/open_sans_extra_bold</item>
+    </style>
+
+    <style name="productDetails">
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/open_sans_regular</item>
+        <item name="android:textColor">#424A56</item>
+    </style>
+
+    <style name="productPrice">
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/open_sans_semi_bold</item>
+        <item name="android:textColor">#035A97</item>
+    </style>
+
+</resources>
