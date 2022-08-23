@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -37,7 +39,14 @@ android {
 }
 
 dependencies {
-  
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
+
+    //Dagger.Hilt
+    implementation("com.google.dagger:hilt-android:$version_dagger_hilt")
+    kapt("com.google.dagger:hilt-android-compiler:$version_dagger_hilt")
+
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
