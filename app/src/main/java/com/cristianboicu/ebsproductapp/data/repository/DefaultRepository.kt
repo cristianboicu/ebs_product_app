@@ -5,4 +5,6 @@ import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(private val remoteDataSource: IRemoteDataSource) :
     IDefaultRepository {
+    override suspend fun getAllProducts(page: Int, pageSize: Int) =
+        remoteDataSource.getAllProducts(page, pageSize)
 }

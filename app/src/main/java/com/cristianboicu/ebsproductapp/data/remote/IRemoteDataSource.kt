@@ -1,5 +1,8 @@
 package com.cristianboicu.ebsproductapp.data.remote
 
+import com.cristianboicu.ebsproductapp.data.model.ProductsResponse
+import retrofit2.Response
+
 interface IRemoteDataSource {
-    fun fetchAllProducts(page: Int, pageSize: Int)
+    suspend fun getAllProducts(page: Int, pageSize: Int): Response<ProductsResponse>
 }

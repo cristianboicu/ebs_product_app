@@ -1,5 +1,6 @@
 package com.cristianboicu.ebsproductapp
 
 object Constants {
-    val BASE_URL = "http://mobile-shop-api.hiring.devebs.net/products"
+    const val BASE_URL = "http://mobile-shop-api.hiring.devebs.net"
+    const val QUERY_PAGE_SIZE = 10
 }
