@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="toolbar_status_bar">#182867</color>
+    <color name="cart_bar_color">#7740A2</color>
+    <color name="line_color">#E5EBE9</color>
+    <color name="transparent_line">#26FFFFFF</color>
 </resources>

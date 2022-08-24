@@ -27,15 +27,19 @@ class ProductsAdapter(context: Context, private var products: List<Product>) :
             binding = convertView.tag as ItemProductBinding
         }
 
-        binding.tvProductName.text = products[position].name
-        binding.tvProductDetails.text = products[position].details
-        binding.tvProductPrice.text = String.format(context.getString(R.string.product_price),
-            products[position].price.toString())
-        binding.tvProductPriceSecond.text = String.format(context.getString(R.string.product_price),
-            products[position].price.toString())
-        Glide.with(context).load(products[position].mainImage)
-            .into(binding.ivProduct)
+        populateView(binding, products[position])
 
         return binding.root
+    }
+
+    private fun populateView(binding: ItemProductBinding, product: Product) {
+        binding.tvProductName.text = product.name
+        binding.tvProductDetails.text = product.details
+        binding.tvProductPrice.text = String.format(context.getString(R.string.product_price),
+            product.price.toString())
+        binding.tvProductPriceSecond.text = String.format(context.getString(R.string.product_price),
+            product.price.toString())
+        Glide.with(context).load(product.mainImage)
+            .into(binding.ivProduct)
     }
 }
