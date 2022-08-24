@@ -8,16 +8,15 @@
     <fragment
         android:id="@+id/productsFragment"
         android:name="com.cristianboicu.ebsproductapp.ui.fragments.ProductsFragment"
-        android:label="fragment_products"
-        tools:layout="@layout/fragment_products" >
+        tools:layout="@layout/fragment_products">
         <action
             android:id="@+id/showProductDetails"
             app:destination="@id/productDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
-        android:name="com.cristianboicu.ebsproductapp.ui.fragments.ProductDetailsFragment"
-        android:label="ProductDetailsFragment" >
+        tools:layout="@layout/fragment_product_details"
+        android:name="com.cristianboicu.ebsproductapp.ui.fragments.ProductDetailsFragment">
         <argument
             android:name="product_id"
             app:argType="long" />
