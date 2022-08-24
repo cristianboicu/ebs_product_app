@@ -9,7 +9,6 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.cristianboicu.ebsproductapp.EndlessScrollListener
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductsBinding
 import com.cristianboicu.ebsproductapp.ui.adapter.ProductsAdapter
@@ -54,7 +53,9 @@ class ProductsFragment : Fragment() {
                     Log.d(TAG, "Loading")
                 }
                 is Resource.Error -> {
-                    Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,
+                        "An error occurred: ${response.message}",
+                        Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -62,7 +63,7 @@ class ProductsFragment : Fragment() {
         return binding.root
     }
 
-    private fun setUpListView(){
+    private fun setUpListView() {
         productsAdapter = ProductsAdapter(requireContext(), mutableListOf())
         lvProducts.apply {
             adapter = productsAdapter
