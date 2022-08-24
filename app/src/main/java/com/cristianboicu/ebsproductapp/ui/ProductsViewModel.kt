@@ -12,6 +12,8 @@ import com.cristianboicu.ebsproductapp.Constants.QUERY_PAGE_SIZE
 import com.cristianboicu.ebsproductapp.data.model.ProductsResponse
 import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
 import com.cristianboicu.ebsproductapp.util.Resource
+import com.cristianboicu.ebsproductapp.util.Utils
+import com.cristianboicu.ebsproductapp.util.Utils.hasInternetConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -57,7 +59,7 @@ class ProductsViewModel @Inject constructor(
     private suspend fun safeGetAllProductsCall() {
         allProducts.postValue(Resource.Loading())
         try {
-            if (hasInternetConnection()) {
+            if (hasInternetConnection(getApplication<BaseApplication>())) {
                 val response = repository.getAllProducts(allProductsPage, QUERY_PAGE_SIZE)
                 allProducts.postValue(handleAllProductsResponse(response))
             } else {
@@ -71,18 +73,6 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    private fun hasInternetConnection(): Boolean {
-        val connectivityManager =
-            getApplication<BaseApplication>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        val activeNetwork = connectivityManager.activeNetwork ?: return false
-        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-        return when {
-            capabilities.hasTransport(TRANSPORT_WIFI) -> true
-            capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
-            capabilities.hasTransport(TRANSPORT_ETHERNET) -> true
-            else -> false
-        }
-    }
 
 }

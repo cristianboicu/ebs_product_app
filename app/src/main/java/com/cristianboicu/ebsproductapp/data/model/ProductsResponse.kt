@@ -23,10 +23,15 @@ data class Product(
     val price: Int,
     @SerializedName("main_image")
     val mainImage: String,
+    val images: List<ProductImage>,
 )
 
 data class Category(
     val name: String,
     val icon: String,
     val id: Int,
+)
+
+data class ProductImage(
+    val image: String,
 )

@@ -7,4 +7,7 @@ class DefaultRepository @Inject constructor(private val remoteDataSource: IRemot
     IDefaultRepository {
     override suspend fun getAllProducts(page: Int, pageSize: Int) =
         remoteDataSource.getAllProducts(page, pageSize)
+
+    override suspend fun getProductDetails(productId: Long) =
+        remoteDataSource.getProductDetails(productId)
 }
