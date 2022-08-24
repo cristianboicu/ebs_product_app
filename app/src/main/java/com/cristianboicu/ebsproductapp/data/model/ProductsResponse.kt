@@ -10,7 +10,7 @@ data class ProductsResponse(
     val perPage: Int,
     @SerializedName("current_page")
     val currentPage: Int,
-    val results: List<Product>,
+    val results: MutableList<Product>,
 )
 
 data class Product(

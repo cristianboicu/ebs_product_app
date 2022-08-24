@@ -8,6 +8,7 @@ import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
 import com.cristianboicu.ebsproductapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,22 +17,35 @@ class ProductsViewModel @Inject constructor(private val repository: IDefaultRepo
 
     val allProducts: MutableLiveData<Resource<ProductsResponse>> = MutableLiveData()
     var allProductsPage = 1
-
+    var allProductsResponse: ProductsResponse? = null
 
     init {
         getAllProducts()
     }
 
-    private fun getAllProducts() {
+    fun getAllProducts() {
         viewModelScope.launch {
-            val response = repository.getAllProducts(1, 10)
-            if (response.isSuccessful) {
-                response.body()?.let { productsResponse ->
-                    allProductsPage++
-                    allProducts.postValue(Resource.Success(productsResponse))
-                }
-            } else allProducts.postValue(Resource.Error(response.message()))
+            allProducts.postValue(Resource.Loading())
+            val response = repository.getAllProducts(allProductsPage, 10)
+            allProducts.postValue(handleAllProductsResponse(response))
         }
+    }
+
+    private fun handleAllProductsResponse(response: Response<ProductsResponse>): Resource<ProductsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { productsResponse ->
+                allProductsPage++
+                if (allProductsResponse == null) {
+                    allProductsResponse = productsResponse
+                } else {
+                    val oldProducts = allProductsResponse?.results
+                    val newProducts = productsResponse.results
+                    oldProducts?.addAll(newProducts)
+                }
+                return Resource.Success(allProductsResponse ?: productsResponse)
+            }
+        }
+        return Resource.Error(response.message())
     }
 
 }

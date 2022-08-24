@@ -10,8 +10,14 @@ import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.Product
 import com.cristianboicu.ebsproductapp.databinding.ItemProductBinding
 
-class ProductsAdapter(context: Context, private var products: List<Product>) :
+class ProductsAdapter(context: Context, private val products: MutableList<Product>) :
     ArrayAdapter<Product>(context, R.layout.item_product, products) {
+
+    fun submitList(items: List<Product>){
+        products.clear()
+        products.addAll(items)
+        notifyDataSetChanged()
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         lateinit var binding: ItemProductBinding
