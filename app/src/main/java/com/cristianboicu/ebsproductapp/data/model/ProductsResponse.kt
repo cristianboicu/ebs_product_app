@@ -14,7 +14,7 @@ data class ProductsResponse(
 )
 
 data class Product(
-    val id: Int,
+    val id: Long,
     val category: Category,
     val name: String,
     val details: String,

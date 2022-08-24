@@ -10,10 +10,15 @@ import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.Product
 import com.cristianboicu.ebsproductapp.databinding.ItemProductBinding
 
-class ProductsAdapter(context: Context, private val products: MutableList<Product>) :
+class ProductsAdapter(
+    context: Context,
+    private val products: MutableList<Product>,
+    val productClickListener: (productId: Long) -> Unit,
+    val likeClickListener: (product: Product) -> Unit,
+) :
     ArrayAdapter<Product>(context, R.layout.item_product, products) {
 
-    fun submitList(items: List<Product>){
+    fun submitList(items: List<Product>) {
         products.clear()
         products.addAll(items)
         notifyDataSetChanged()
@@ -47,5 +52,12 @@ class ProductsAdapter(context: Context, private val products: MutableList<Produc
             product.price.toString())
         Glide.with(context).load(product.mainImage)
             .into(binding.ivProduct)
+
+        binding.root.setOnClickListener {
+            productClickListener(product.id)
+        }
+        binding.btnLike.setOnClickListener {
+            likeClickListener(product)
+        }
     }
 }

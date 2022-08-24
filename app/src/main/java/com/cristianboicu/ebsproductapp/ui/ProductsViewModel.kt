@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cristianboicu.ebsproductapp.BaseApplication
+import com.cristianboicu.ebsproductapp.Constants.QUERY_PAGE_SIZE
 import com.cristianboicu.ebsproductapp.data.model.ProductsResponse
 import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
 import com.cristianboicu.ebsproductapp.util.Resource
@@ -57,7 +58,7 @@ class ProductsViewModel @Inject constructor(
         allProducts.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = repository.getAllProducts(allProductsPage, 10)
+                val response = repository.getAllProducts(allProductsPage, QUERY_PAGE_SIZE)
                 allProducts.postValue(handleAllProductsResponse(response))
             } else {
                 allProducts.postValue(Resource.Error("No internet connection!"))

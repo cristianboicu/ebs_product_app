@@ -1,11 +1,11 @@
 package com.cristianboicu.ebsproductapp
 
 import android.widget.AbsListView
+import com.cristianboicu.ebsproductapp.Constants.VISIBLE_THRESHOLD
 import com.cristianboicu.ebsproductapp.ui.ProductsViewModel
 
 class EndlessScrollListener(private val viewModel: ProductsViewModel) :
     AbsListView.OnScrollListener {
-    private var visibleThreshold = 4
     private var previousTotal = 0
     private var loading = true
     private var isLastPage = false
@@ -29,7 +29,7 @@ class EndlessScrollListener(private val viewModel: ProductsViewModel) :
                 previousTotal = totalItemCount
             }
         }
-        if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold) && !isLastPage) {
+        if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_THRESHOLD) && !isLastPage) {
             viewModel.getAllProducts()
             loading = true
         }

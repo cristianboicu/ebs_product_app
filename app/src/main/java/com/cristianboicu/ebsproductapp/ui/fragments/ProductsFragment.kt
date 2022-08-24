@@ -1,4 +1,4 @@
-package com.cristianboicu.ebsproductapp.ui
+package com.cristianboicu.ebsproductapp.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -9,8 +9,11 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.cristianboicu.ebsproductapp.EndlessScrollListener
+import com.cristianboicu.ebsproductapp.data.model.Product
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductsBinding
+import com.cristianboicu.ebsproductapp.ui.ProductsViewModel
 import com.cristianboicu.ebsproductapp.ui.adapter.ProductsAdapter
 import com.cristianboicu.ebsproductapp.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,11 +67,28 @@ class ProductsFragment : Fragment() {
     }
 
     private fun setUpListView() {
-        productsAdapter = ProductsAdapter(requireContext(), mutableListOf())
+        productsAdapter =
+            ProductsAdapter(requireContext(),
+                mutableListOf(),
+                ::navigateToProductDetails,
+                ::saveProductToFavorites)
         lvProducts.apply {
             adapter = productsAdapter
             setOnScrollListener(scrollListener)
         }
     }
+
+    private fun saveProductToFavorites(product: Product) {
+        Toast.makeText(context,
+            "Add ${product.name} to favorites",
+            Toast.LENGTH_SHORT).show()
+    }
+
+    private fun navigateToProductDetails(productId: Long) {
+        findNavController().navigate(
+            ProductsFragmentDirections.showProductDetails(productId)
+        )
+    }
+
 
 }
