@@ -12,4 +12,5 @@
     <color name="cart_bar_color">#7740A2</color>
     <color name="line_color">#E5EBE9</color>
     <color name="transparent_line">#26FFFFFF</color>
+    <color name="default_dot">#40FFFFFF</color>
 </resources>

@@ -24,6 +24,7 @@ data class Product(
     @SerializedName("main_image")
     val mainImage: String,
     val images: List<ProductImage>,
+    var liked: Boolean = false
 )
 
 data class Category(
