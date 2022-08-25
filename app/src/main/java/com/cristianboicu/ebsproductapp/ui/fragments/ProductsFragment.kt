@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.cristianboicu.ebsproductapp.EndlessScrollListener
 import com.cristianboicu.ebsproductapp.data.model.Product
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductsBinding
-import com.cristianboicu.ebsproductapp.ui.ProductsViewModel
+import com.cristianboicu.ebsproductapp.ui.viewModels.ProductsViewModel
 import com.cristianboicu.ebsproductapp.ui.adapter.ProductsAdapter
 import com.cristianboicu.ebsproductapp.util.Resource
 import dagger.hilt.android.AndroidEntryPoint

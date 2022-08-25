@@ -1,4 +1,4 @@
-package com.cristianboicu.ebsproductapp.ui
+package com.cristianboicu.ebsproductapp.ui.viewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

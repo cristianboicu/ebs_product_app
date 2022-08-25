@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_cart_floating_bar.xml" value="0.1505" />
+        <entry key="app/src/main/res/drawable/bg_details_product_info.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/bg_feed_actions.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/bg_round_white.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/ic_filter.xml" value="0.1505" />

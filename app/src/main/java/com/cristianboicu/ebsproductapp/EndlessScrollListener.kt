@@ -2,7 +2,7 @@ package com.cristianboicu.ebsproductapp
 
 import android.widget.AbsListView
 import com.cristianboicu.ebsproductapp.Constants.VISIBLE_THRESHOLD
-import com.cristianboicu.ebsproductapp.ui.ProductsViewModel
+import com.cristianboicu.ebsproductapp.ui.viewModels.ProductsViewModel
 
 class EndlessScrollListener(private val viewModel: ProductsViewModel) :
     AbsListView.OnScrollListener {

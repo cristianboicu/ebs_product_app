@@ -1,9 +1,6 @@
-package com.cristianboicu.ebsproductapp.ui
+package com.cristianboicu.ebsproductapp.ui.viewModels
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities.*
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,7 +9,6 @@ import com.cristianboicu.ebsproductapp.Constants.QUERY_PAGE_SIZE
 import com.cristianboicu.ebsproductapp.data.model.ProductsResponse
 import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
 import com.cristianboicu.ebsproductapp.util.Resource
-import com.cristianboicu.ebsproductapp.util.Utils
 import com.cristianboicu.ebsproductapp.util.Utils.hasInternetConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

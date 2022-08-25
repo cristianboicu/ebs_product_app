@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.cristianboicu.ebsproductapp.R
+import com.cristianboicu.ebsproductapp.data.model.Product
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductDetailsBinding
-import com.cristianboicu.ebsproductapp.ui.ProductDetailsViewModel
+import com.cristianboicu.ebsproductapp.ui.viewModels.ProductDetailsViewModel
 import com.cristianboicu.ebsproductapp.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,10 +29,13 @@ class ProductDetailsFragment : Fragment() {
         val productId = ProductDetailsFragmentArgs.fromBundle(requireArguments()).productId
 
         viewModel.getProductDetails(productId)
+
         viewModel.productDetails.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
-                    binding.tvId.text = response.data.toString()
+                    response.data?.let { product ->
+                        fillInformation(product)
+                    }
                 }
                 is Resource.Loading -> {
                     Toast.makeText(context,
@@ -43,7 +49,24 @@ class ProductDetailsFragment : Fragment() {
                 }
             }
         }
+
         return binding.root
+    }
+
+    private fun fillInformation(product: Product) {
+        binding.tvProductDetailsInfo.text = product.details
+        context?.let {
+            Glide.with(it).load(product.mainImage)
+                .into(binding.ivMainProduct)
+        }
+        binding.tvProductDetailsName.text = product.name
+        binding.tvProductPrice.text =
+            String.format(requireContext().getString(R.string.product_price),
+                product.price.toString())
+        binding.tvProductPriceSecond.text =
+            String.format(requireContext().getString(R.string.product_price),
+                product.price.toString())
+        binding.tvProductDetailsSpecs.text = "response.data?.price"
     }
 
 }

@@ -6,4 +6,6 @@
     <string name="my_cart">My Cart</string>
     <string name="filters">Filters</string>
     <string name="favorites">Favorites</string>
+    <string name="information">Information</string>
+    <string name="product_image">Product Image</string>
 </resources>

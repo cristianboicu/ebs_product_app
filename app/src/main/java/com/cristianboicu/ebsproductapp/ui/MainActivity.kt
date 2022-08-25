@@ -1,4 +1,4 @@
-package com.cristianboicu.ebsproductapp
+package com.cristianboicu.ebsproductapp.ui
 
 import android.os.Bundle
 import android.view.View
@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.cristianboicu.ebsproductapp.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

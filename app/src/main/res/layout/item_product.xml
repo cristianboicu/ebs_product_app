@@ -17,6 +17,7 @@
             android:id="@+id/iv_product"
             android:layout_width="110dp"
             android:layout_height="82dp"
+            android:contentDescription="@string/product_image"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toStartOf="@id/layout_info"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +38,7 @@
 
             <TextView
                 android:id="@+id/tv_product_name"
-                style="@style/productName"
+                style="@style/productNameFeedPage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
