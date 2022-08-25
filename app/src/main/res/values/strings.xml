@@ -8,4 +8,6 @@
     <string name="favorites">Favorites</string>
     <string name="information">Information</string>
     <string name="product_image">Product Image</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="buy_now">Buy now</string>
 </resources>
