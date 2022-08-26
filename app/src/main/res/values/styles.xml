@@ -59,4 +59,10 @@
         <item name="android:layout_width">1dp</item>
     </style>
 
+    <style name="progressBar">
+        <item name="android:indeterminateTint">@color/toolbar_status_bar</item>
+        <item name="android:background">@android:color/transparent</item>
+
+    </style>
+
 </resources>

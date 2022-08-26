@@ -10,11 +10,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
         tools:context=".ui.fragments.ProductDetailsFragment">
 
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ProgressBar
+            android:id="@+id/details_progress_bar"
+            style="@style/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleX="0.1"
+            android:scaleY="0.1"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <ScrollView
-            android:id="@+id/scrollView2"
+            android:id="@+id/product_details_scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -113,5 +133,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </LinearLayout>
 </layout>

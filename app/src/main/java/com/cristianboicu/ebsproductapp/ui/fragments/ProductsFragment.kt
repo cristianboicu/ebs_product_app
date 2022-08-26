@@ -13,8 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.cristianboicu.ebsproductapp.EndlessScrollListener
 import com.cristianboicu.ebsproductapp.data.model.Product
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductsBinding
-import com.cristianboicu.ebsproductapp.ui.viewModels.ProductsViewModel
+import com.cristianboicu.ebsproductapp.ui.MainActivity
 import com.cristianboicu.ebsproductapp.ui.adapter.ProductsAdapter
+import com.cristianboicu.ebsproductapp.ui.viewModels.ProductsViewModel
 import com.cristianboicu.ebsproductapp.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,6 +43,7 @@ class ProductsFragment : Fragment() {
         viewModel.allProducts.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
+                    hideProgressBar()
                     response.data?.let {
                         productsAdapter.submitList(it.results)
 
@@ -52,7 +54,7 @@ class ProductsFragment : Fragment() {
                     }
                 }
                 is Resource.Loading -> {
-//                    Toast.makeText(context, "Is Loading", Toast.LENGTH_SHORT).show()
+                    showProgressBar()
                     Log.d(TAG, "Loading")
                 }
                 is Resource.Error -> {
@@ -64,6 +66,21 @@ class ProductsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun hideProgressBar() {
+        binding.paginationProgressBar.visibility = View.INVISIBLE
+    }
+
+    private fun showProgressBar() {
+        binding.paginationProgressBar.visibility = View.VISIBLE
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val baseActivity = requireActivity() as MainActivity
+        val toolbar = binding.layoutToolbar.toolbar
+        baseActivity.setUpToolBar(toolbar)
     }
 
     private fun setUpListView() {

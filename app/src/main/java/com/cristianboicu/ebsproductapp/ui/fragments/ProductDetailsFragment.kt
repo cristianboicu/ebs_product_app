@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.PagerAdapter
@@ -20,13 +22,12 @@ import com.cristianboicu.ebsproductapp.util.Resource
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailsBinding
     private val viewModel: ProductDetailsViewModel by viewModels()
-    private lateinit var baseActivity: MainActivity
+    private lateinit var toolbar: Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,22 +36,21 @@ class ProductDetailsFragment : Fragment() {
         binding = FragmentProductDetailsBinding.inflate(inflater)
         val productId = ProductDetailsFragmentArgs.fromBundle(requireArguments()).productId
 
-        baseActivity = requireActivity() as MainActivity
-        baseActivity.hideToolbarLogo()
+        val mainActivity = requireActivity() as MainActivity
+        setUpToolbar(mainActivity)
 
         viewModel.getProductDetails(productId)
         viewModel.productDetails.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
+                    hideProgressBar()
                     response.data?.let { product ->
-                        fillInformation(product)
+                        fillProductDetails(product)
                         setUpPager(product.images as MutableList<ProductImage>)
                     }
                 }
                 is Resource.Loading -> {
-                    Toast.makeText(context,
-                        "Loading",
-                        Toast.LENGTH_SHORT).show()
+                    showProgressBar()
                 }
                 is Resource.Error -> {
                     Toast.makeText(context,
@@ -63,6 +63,30 @@ class ProductDetailsFragment : Fragment() {
         return binding.root
     }
 
+    private fun hideProgressBar() {
+        binding.detailsProgressBar.visibility = View.GONE
+    }
+
+    private fun showProgressBar() {
+        binding.detailsProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun setUpToolbar(mainActivity: MainActivity) {
+        toolbar = binding.layoutToolbar.toolbar
+        mainActivity.setUpToolBar(toolbar)
+        hideToolbarLogo(toolbar)
+    }
+
+    private fun restoreToolbar(toolbar: Toolbar) {
+        toolbar.findViewById<ImageView>(R.id.iv_logo).visibility = View.VISIBLE
+        toolbar.findViewById<TabLayout>(R.id.tab_layout).visibility = View.GONE
+    }
+
+    private fun hideToolbarLogo(toolbar: Toolbar) {
+        toolbar.findViewById<ImageView>(R.id.iv_logo).visibility = View.GONE
+        toolbar.findViewById<TabLayout>(R.id.tab_layout).visibility = View.VISIBLE
+    }
+
     private fun setUpPager(images: MutableList<ProductImage>) {
         images.add(images[0])
         images.add(images[0])
@@ -72,16 +96,16 @@ class ProductDetailsFragment : Fragment() {
         val adapter: PagerAdapter = ImageSliderAdapter(requireContext(), images)
         pager.adapter = adapter
 
-        setUpTabLayout(pager)
+        setUpPagerIndicator(pager)
     }
 
-    private fun setUpTabLayout(pager: ViewPager) {
-        val tabLayout = baseActivity.findViewById(R.id.tab_layout) as TabLayout
+    private fun setUpPagerIndicator(pager: ViewPager) {
+        val tabLayout = toolbar.findViewById(R.id.tab_layout) as TabLayout
         tabLayout.visibility = View.VISIBLE
         tabLayout.setupWithViewPager(pager, true)
     }
 
-    private fun fillInformation(product: Product) {
+    private fun fillProductDetails(product: Product) {
         binding.tvProductDetailsInfo.text = product.details
         binding.tvProductDetailsName.text = product.name
         binding.tvProductPrice.text =
@@ -95,7 +119,7 @@ class ProductDetailsFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        baseActivity.restoreToolbar()
+        restoreToolbar(toolbar)
     }
 
 }
