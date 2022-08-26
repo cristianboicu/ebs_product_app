@@ -1,4 +1,4 @@
-package com.cristianboicu.ebsproductapp
+package com.cristianboicu.ebsproductapp.di
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

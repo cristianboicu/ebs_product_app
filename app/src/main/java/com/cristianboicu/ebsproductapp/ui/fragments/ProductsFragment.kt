@@ -111,8 +111,10 @@ class ProductsFragment : Fragment() {
     }
 
     private fun saveProductToFavorites(product: Product) {
+        viewModel.changeProductFavoriteStatus(product)
+        productsAdapter.notifyDataSetChanged()
         Toast.makeText(context,
-            "Add ${product.name} to favorites",
+            "Add ${product.name} to favorites ${product.favorite}",
             Toast.LENGTH_SHORT).show()
     }
 

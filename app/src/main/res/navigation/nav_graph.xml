@@ -30,5 +30,9 @@
     <fragment
         android:id="@+id/favoritesFragment"
         tools:layout="@layout/fragment_favorites"
-        android:name="com.cristianboicu.ebsproductapp.ui.fragments.FavoritesFragment" />
+        android:name="com.cristianboicu.ebsproductapp.ui.fragments.FavoritesFragment" >
+        <action
+            android:id="@+id/showProductDetails"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
 </navigation>

@@ -1,5 +1,7 @@
 package com.cristianboicu.ebsproductapp.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class ProductsResponse(
@@ -13,7 +15,23 @@ data class ProductsResponse(
     val results: MutableList<Product>,
 )
 
+@Entity
 data class Product(
+    @PrimaryKey
+    val id: Long,
+    val name: String,
+    val details: String,
+    val size: String,
+    val colour: String,
+    val price: Int,
+    @SerializedName("main_image")
+    val mainImage: String,
+    var favorite: Boolean = false
+)
+
+@Entity
+data class ProductDetails(
+    @PrimaryKey
     val id: Long,
     val category: Category,
     val name: String,

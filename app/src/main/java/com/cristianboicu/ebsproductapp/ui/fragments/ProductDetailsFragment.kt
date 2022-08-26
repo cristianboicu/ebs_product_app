@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.cristianboicu.ebsproductapp.R
-import com.cristianboicu.ebsproductapp.data.model.Product
+import com.cristianboicu.ebsproductapp.data.model.ProductDetails
 import com.cristianboicu.ebsproductapp.data.model.ProductImage
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductDetailsBinding
 import com.cristianboicu.ebsproductapp.ui.MainActivity
@@ -111,7 +111,7 @@ class ProductDetailsFragment : Fragment() {
         tabLayout.setupWithViewPager(pager, true)
     }
 
-    private fun fillProductDetails(product: Product) {
+    private fun fillProductDetails(product: ProductDetails) {
         binding.tvProductDetailsInfo.text = product.details
         binding.tvProductDetailsName.text = product.name
         binding.tvProductPrice.text =

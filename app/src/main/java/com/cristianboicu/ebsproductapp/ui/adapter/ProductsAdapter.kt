@@ -52,6 +52,7 @@ class ProductsAdapter(
             product.price.toString())
         Glide.with(context).load(product.mainImage)
             .into(binding.ivProduct)
+        binding.btnLike.isSelected = product.favorite
 
         binding.root.setOnClickListener {
             productClickListener(product.id)

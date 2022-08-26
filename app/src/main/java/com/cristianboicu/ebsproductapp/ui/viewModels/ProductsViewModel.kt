@@ -4,10 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.cristianboicu.ebsproductapp.BaseApplication
 import com.cristianboicu.ebsproductapp.Constants.QUERY_PAGE_SIZE
+import com.cristianboicu.ebsproductapp.data.model.Product
 import com.cristianboicu.ebsproductapp.data.model.ProductsResponse
 import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
+import com.cristianboicu.ebsproductapp.di.BaseApplication
 import com.cristianboicu.ebsproductapp.util.Resource
 import com.cristianboicu.ebsproductapp.util.Utils.hasInternetConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -69,6 +70,18 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
+    fun changeProductFavoriteStatus(product: Product) {
+        viewModelScope.launch {
+            if (product.favorite) {
+                product.favorite = !product.favorite
+                repository.removeProductFromFavorites(productId = product.id)
+            } else {
+                product.favorite = !product.favorite
+                repository.addProductToFavorites(product)
+            }
+        }
+
+    }
 
 
 }

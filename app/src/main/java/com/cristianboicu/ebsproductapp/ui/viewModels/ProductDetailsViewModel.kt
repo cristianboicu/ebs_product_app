@@ -4,9 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.cristianboicu.ebsproductapp.BaseApplication
 import com.cristianboicu.ebsproductapp.data.model.Product
+import com.cristianboicu.ebsproductapp.data.model.ProductDetails
 import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
+import com.cristianboicu.ebsproductapp.di.BaseApplication
 import com.cristianboicu.ebsproductapp.util.Resource
 import com.cristianboicu.ebsproductapp.util.Utils.hasInternetConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,7 @@ class ProductDetailsViewModel @Inject constructor(
 ) :
     AndroidViewModel(app) {
 
-    private val _productDetails = MutableLiveData<Resource<Product>>()
+    private val _productDetails = MutableLiveData<Resource<ProductDetails>>()
     val productDetails = _productDetails
 
     fun getProductDetails(productId: Long) = viewModelScope.launch {
@@ -46,7 +47,7 @@ class ProductDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun handleProductDetailsResponse(response: Response<Product>): Resource<Product> {
+    private fun handleProductDetailsResponse(response: Response<ProductDetails>): Resource<ProductDetails> {
         if (response.isSuccessful) {
             response.body()?.let { productsResponse ->
                 return Resource.Success(productsResponse)

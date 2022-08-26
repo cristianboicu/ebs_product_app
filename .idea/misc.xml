@@ -6,11 +6,15 @@
         <entry key="app/src/main/res/drawable/bg_add_to_cart_btn.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/bg_buy_now_btn.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/bg_cart_floating_bar.xml" value="0.1505" />
+        <entry key="app/src/main/res/drawable/bg_circle_selected.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/bg_details_product_info.xml" value="0.1505" />
+        <entry key="app/src/main/res/drawable/bg_favorite_selected.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/bg_feed_actions.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/bg_round_orange.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/bg_round_white.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/default_dot.xml" value="0.1505" />
+        <entry key="app/src/main/res/drawable/favourite_button_selector.xml" value="0.1505" />
+        <entry key="app/src/main/res/drawable/heart_icon_selector.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/ic_filter.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/selected_dot.xml" value="0.1505" />
