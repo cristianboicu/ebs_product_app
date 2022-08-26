@@ -2,15 +2,16 @@ package com.cristianboicu.ebsproductapp.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ListView
 import android.widget.Toast
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cristianboicu.ebsproductapp.EndlessScrollListener
+import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.Product
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductsBinding
 import com.cristianboicu.ebsproductapp.ui.MainActivity
@@ -18,6 +19,7 @@ import com.cristianboicu.ebsproductapp.ui.adapter.ProductsAdapter
 import com.cristianboicu.ebsproductapp.ui.viewModels.ProductsViewModel
 import com.cristianboicu.ebsproductapp.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class ProductsFragment : Fragment() {
@@ -35,15 +37,17 @@ class ProductsFragment : Fragment() {
     ): View {
         binding = FragmentProductsBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
+        scrollListener = EndlessScrollListener(viewModel)
+        val menuHost: MenuHost = binding.layoutToolbar.toolbar
 
         lvProducts = binding.lvProducts
-        scrollListener = EndlessScrollListener(viewModel)
         setUpListView()
+        setUpToolbarMenu(menuHost)
+
 
         viewModel.allProducts.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
-                    hideProgressBar()
                     response.data?.let {
                         productsAdapter.submitList(it.results)
 
@@ -54,8 +58,6 @@ class ProductsFragment : Fragment() {
                     }
                 }
                 is Resource.Loading -> {
-                    showProgressBar()
-                    Log.d(TAG, "Loading")
                 }
                 is Resource.Error -> {
                     Toast.makeText(context,
@@ -68,16 +70,29 @@ class ProductsFragment : Fragment() {
         return binding.root
     }
 
-    private fun hideProgressBar() {
-        binding.paginationProgressBar.visibility = View.INVISIBLE
-    }
+    private fun setUpToolbarMenu(menuHost: MenuHost) {
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            }
 
-    private fun showProgressBar() {
-        binding.paginationProgressBar.visibility = View.VISIBLE
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.favoritesFragment -> {
+                        navigateToFavorites()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner)
     }
 
     override fun onStart() {
         super.onStart()
+        setUpToolbar()
+    }
+
+    private fun setUpToolbar() {
         val baseActivity = requireActivity() as MainActivity
         val toolbar = binding.layoutToolbar.toolbar
         baseActivity.setUpToolBar(toolbar)
@@ -107,5 +122,9 @@ class ProductsFragment : Fragment() {
         )
     }
 
-
+    private fun navigateToFavorites() {
+        findNavController().navigate(
+            ProductsFragmentDirections.showFavorites()
+        )
+    }
 }

@@ -12,6 +12,9 @@
         <action
             android:id="@+id/showProductDetails"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/showFavorites"
+            app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -20,5 +23,12 @@
         <argument
             android:name="product_id"
             app:argType="long" />
+        <action
+            android:id="@+id/showFavorites"
+            app:destination="@id/favoritesFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        tools:layout="@layout/fragment_favorites"
+        android:name="com.cristianboicu.ebsproductapp.ui.fragments.FavoritesFragment" />
 </navigation>

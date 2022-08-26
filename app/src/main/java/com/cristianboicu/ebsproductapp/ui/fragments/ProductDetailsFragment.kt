@@ -1,14 +1,15 @@
 package com.cristianboicu.ebsproductapp.ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.cristianboicu.ebsproductapp.R
@@ -34,23 +35,25 @@ class ProductDetailsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentProductDetailsBinding.inflate(inflater)
+        val menuHost: MenuHost = binding.layoutToolbar.toolbar
+
         val productId = ProductDetailsFragmentArgs.fromBundle(requireArguments()).productId
 
         val mainActivity = requireActivity() as MainActivity
         setUpToolbar(mainActivity)
+        setUpToolbarMenu(menuHost)
+        hideToolbarLogo(toolbar)
 
         viewModel.getProductDetails(productId)
         viewModel.productDetails.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
-                    hideProgressBar()
                     response.data?.let { product ->
                         fillProductDetails(product)
                         setUpPager(product.images as MutableList<ProductImage>)
                     }
                 }
                 is Resource.Loading -> {
-                    showProgressBar()
                 }
                 is Resource.Error -> {
                     Toast.makeText(context,
@@ -63,23 +66,26 @@ class ProductDetailsFragment : Fragment() {
         return binding.root
     }
 
-    private fun hideProgressBar() {
-        binding.detailsProgressBar.visibility = View.GONE
-    }
+    private fun setUpToolbarMenu(menuHost: MenuHost) {
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            }
 
-    private fun showProgressBar() {
-        binding.detailsProgressBar.visibility = View.VISIBLE
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.favoritesFragment -> {
+                        navigateToFavorites()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner)
     }
 
     private fun setUpToolbar(mainActivity: MainActivity) {
         toolbar = binding.layoutToolbar.toolbar
         mainActivity.setUpToolBar(toolbar)
-        hideToolbarLogo(toolbar)
-    }
-
-    private fun restoreToolbar(toolbar: Toolbar) {
-        toolbar.findViewById<ImageView>(R.id.iv_logo).visibility = View.VISIBLE
-        toolbar.findViewById<TabLayout>(R.id.tab_layout).visibility = View.GONE
     }
 
     private fun hideToolbarLogo(toolbar: Toolbar) {
@@ -117,9 +123,10 @@ class ProductDetailsFragment : Fragment() {
         binding.tvProductDetailsSpecs.text = "response.data?.price"
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        restoreToolbar(toolbar)
+    private fun navigateToFavorites() {
+        findNavController().navigate(
+            ProductDetailsFragmentDirections.showFavorites()
+        )
     }
 
 }
