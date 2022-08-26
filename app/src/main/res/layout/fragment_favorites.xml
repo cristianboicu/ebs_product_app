@@ -17,47 +17,73 @@
             android:layout_height="wrap_content" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_favorites_action_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_marginHorizontal="15dp"
+            android:background="@drawable/bg_feed_actions"
+            android:paddingVertical="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_toolbar">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tv_favorites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Favorites"
+                android:fontFamily="@font/open_sans_extra_bold"
+                android:text="@string/favorites"
+                android:textAllCaps="true"
+                android:textColor="#07195C"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_favorites_counter"
-                style="@style/floatingCartCounter"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                style="@style/favoritesCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/bg_round_white"
-                android:padding="3dp"
-                android:text="3"
+                android:text="@string/_4"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintStart_toEndOf="@+id/tv_favorites"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:gravity="center"
+                style="@style/sortBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="sort by"
-                android:drawableEnd="@drawable/ic_heart"
-                android:textAllCaps="true"
+                android:text="@string/sort_by"
+                app:drawableEndCompat="@drawable/ic_chevron_up"
+                app:drawableTint="#07195C"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ListView
+            android:id="@+id/lv_favorites_products"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginEnd="30dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_favorites_action_bar" />
+
+        <include
+            android:id="@+id/layout_floating_cart"
+            layout="@layout/floating_cart_bar"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -21,7 +21,7 @@
             android:minHeight="?attr/actionBarSize"
             app:contentInsetStartWithNavigation="0dp"
             app:menu="@menu/top_app_bar_menu"
-            app:navigationIcon="@drawable/ic_user">
+            app:navigationIcon="@drawable/ic_arrow_back">
 
             <ImageView
                 android:id="@+id/iv_logo"
