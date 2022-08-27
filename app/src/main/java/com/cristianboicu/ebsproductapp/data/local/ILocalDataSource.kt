@@ -1,10 +1,10 @@
 package com.cristianboicu.ebsproductapp.data.local
 
 import androidx.lifecycle.LiveData
-import com.cristianboicu.ebsproductapp.data.model.Product
+import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 
 interface ILocalDataSource {
-    fun observeFavoriteProducts(): LiveData<List<Product>>
-    suspend fun addProductToFavorites(product: Product)
+    fun observeFavoriteProducts(): LiveData<List<ProductDomainModel>>
+    suspend fun addProductToFavorites(product: ProductDomainModel)
     suspend fun removeProductFromFavorites(productId: Long)
 }

@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.cristianboicu.ebsproductapp.data.model.Product
+import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.databinding.FragmentFavoritesBinding
 import com.cristianboicu.ebsproductapp.ui.MainActivity
 import com.cristianboicu.ebsproductapp.ui.adapter.ProductsAdapter
@@ -52,7 +52,7 @@ class FavoritesFragment : Fragment() {
         lvFavoriteProducts.adapter = productsAdapter
     }
 
-    private fun saveProductToFavorites(product: Product) {
+    private fun saveProductToFavorites(product: ProductDomainModel) {
         viewModel.changeProductFavoriteStatus(product)
         Toast.makeText(context,
             "Add ${product.name} to favorites",

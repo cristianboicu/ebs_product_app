@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.cristianboicu.ebsproductapp.data.model.Product
 import com.cristianboicu.ebsproductapp.data.model.ProductDetails
 import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
 import com.cristianboicu.ebsproductapp.di.BaseApplication

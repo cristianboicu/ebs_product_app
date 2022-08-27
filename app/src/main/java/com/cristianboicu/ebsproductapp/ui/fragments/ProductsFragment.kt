@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cristianboicu.ebsproductapp.EndlessScrollListener
 import com.cristianboicu.ebsproductapp.R
-import com.cristianboicu.ebsproductapp.data.model.Product
+import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductsBinding
 import com.cristianboicu.ebsproductapp.ui.MainActivity
 import com.cristianboicu.ebsproductapp.ui.adapter.ProductsAdapter
@@ -110,7 +110,7 @@ class ProductsFragment : Fragment() {
         }
     }
 
-    private fun saveProductToFavorites(product: Product) {
+    private fun saveProductToFavorites(product: ProductDomainModel) {
         viewModel.changeProductFavoriteStatus(product)
         productsAdapter.notifyDataSetChanged()
         Toast.makeText(context,

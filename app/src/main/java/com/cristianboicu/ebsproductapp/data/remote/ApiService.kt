@@ -1,7 +1,7 @@
 package com.cristianboicu.ebsproductapp.data.remote
 
 import com.cristianboicu.ebsproductapp.data.model.ProductDetails
-import com.cristianboicu.ebsproductapp.data.model.ProductsResponse
+import com.cristianboicu.ebsproductapp.data.model.ProductsResponseApiModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,7 +15,7 @@ interface ApiService {
         pageNumber: Int = 1,
         @Query("page_size")
         pageSize: Int = 10,
-    ): Response<ProductsResponse>
+    ): Response<ProductsResponseApiModel>
 
     @GET("/products/{id}")
     suspend fun getProductDetails(

@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.bumptech.glide.Glide
 import com.cristianboicu.ebsproductapp.R
-import com.cristianboicu.ebsproductapp.data.model.Product
+import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.databinding.ItemProductBinding
 
 class ProductsAdapter(
     context: Context,
-    private val products: MutableList<Product>,
+    private val products: MutableList<ProductDomainModel>,
     val productClickListener: (productId: Long) -> Unit,
-    val likeClickListener: (product: Product) -> Unit,
+    val likeClickListener: (product: ProductDomainModel) -> Unit,
 ) :
-    ArrayAdapter<Product>(context, R.layout.item_product, products) {
+    ArrayAdapter<ProductDomainModel>(context, R.layout.item_product, products) {
 
-    fun submitList(items: List<Product>) {
+    fun submitList(items: List<ProductDomainModel>) {
         products.clear()
         products.addAll(items)
         notifyDataSetChanged()
@@ -43,7 +43,7 @@ class ProductsAdapter(
         return binding.root
     }
 
-    private fun populateView(binding: ItemProductBinding, product: Product) {
+    private fun populateView(binding: ItemProductBinding, product: ProductDomainModel) {
         binding.tvProductName.text = product.name
         binding.tvProductDetails.text = product.details
         binding.tvProductPrice.text = String.format(context.getString(R.string.product_price),

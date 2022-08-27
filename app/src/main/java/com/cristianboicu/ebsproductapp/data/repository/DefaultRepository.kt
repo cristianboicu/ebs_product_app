@@ -1,7 +1,7 @@
 package com.cristianboicu.ebsproductapp.data.repository
 
 import com.cristianboicu.ebsproductapp.data.local.ILocalDataSource
-import com.cristianboicu.ebsproductapp.data.model.Product
+import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.data.remote.IRemoteDataSource
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class DefaultRepository @Inject constructor(
 
     override fun observeFavoriteProducts() = localDataSource.observeFavoriteProducts()
 
-    override suspend fun addProductToFavorites(product: Product) =
+    override suspend fun addProductToFavorites(product: ProductDomainModel) =
         localDataSource.addProductToFavorites(product)
 
     override suspend fun removeProductFromFavorites(productId: Long) =

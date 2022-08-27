@@ -1,10 +1,12 @@
 package com.cristianboicu.ebsproductapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -74,7 +76,14 @@ class ProductDetailsFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.favoritesFragment -> {
-                        navigateToFavorites()
+                        menuItem.isChecked = !menuItem.isChecked
+                        when (menuItem.isChecked) {
+                            true -> menuItem.icon =
+                                ContextCompat.getDrawable(requireActivity(),
+                                    R.drawable.ic_full_heart)
+                            false -> menuItem.icon =
+                                ContextCompat.getDrawable(requireActivity(), R.drawable.ic_heart)
+                        }
                         true
                     }
                     else -> false

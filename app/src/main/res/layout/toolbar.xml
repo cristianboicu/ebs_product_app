@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:contentInsetStartWithNavigation="0dp"
-            app:menu="@menu/top_app_bar_menu"
+            app:menu="@menu/toolbar_menu"
             app:navigationIcon="@drawable/ic_arrow_back">
 
             <ImageView

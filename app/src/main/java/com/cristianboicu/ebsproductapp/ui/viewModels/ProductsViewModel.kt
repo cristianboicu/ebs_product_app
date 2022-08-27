@@ -5,8 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cristianboicu.ebsproductapp.Constants.QUERY_PAGE_SIZE
-import com.cristianboicu.ebsproductapp.data.model.Product
-import com.cristianboicu.ebsproductapp.data.model.ProductsResponse
+import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
+import com.cristianboicu.ebsproductapp.data.model.ProductsResponseApiModel
+import com.cristianboicu.ebsproductapp.data.model.ProductsResponseDomainModel
 import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
 import com.cristianboicu.ebsproductapp.di.BaseApplication
 import com.cristianboicu.ebsproductapp.util.Resource
@@ -24,9 +25,9 @@ class ProductsViewModel @Inject constructor(
 ) :
     AndroidViewModel(app) {
 
-    val allProducts: MutableLiveData<Resource<ProductsResponse>> = MutableLiveData()
+    val allProducts: MutableLiveData<Resource<ProductsResponseDomainModel>> = MutableLiveData()
     var allProductsPage = 1
-    private var allProductsResponse: ProductsResponse? = null
+    private var allProductsResponseApiModel: ProductsResponseDomainModel? = null
 
     init {
         getAllProducts()
@@ -36,22 +37,24 @@ class ProductsViewModel @Inject constructor(
         safeGetAllProductsCall()
     }
 
-    private fun handleAllProductsResponse(response: Response<ProductsResponse>): Resource<ProductsResponse> {
-        if (response.isSuccessful) {
-            response.body()?.let { productsResponse ->
+    private fun handleAllProductsResponse(responseApiModel: Response<ProductsResponseApiModel>): Resource<ProductsResponseDomainModel> {
+        if (responseApiModel.isSuccessful) {
+            responseApiModel.body()?.let { productsResponse ->
                 allProductsPage++
-                if (allProductsResponse == null) {
-                    allProductsResponse = productsResponse
+                val response = productsResponse.asDomainModel()
+                if (allProductsResponseApiModel == null) {
+                    allProductsResponseApiModel = response
                 } else {
-                    val oldProducts = allProductsResponse?.results
-                    val newProducts = productsResponse.results
+                    val oldProducts = allProductsResponseApiModel?.results
+                    val newProducts = response.results
                     oldProducts?.addAll(newProducts)
                 }
-                return Resource.Success(allProductsResponse ?: productsResponse)
+                return Resource.Success(allProductsResponseApiModel ?: response)
             }
         }
-        return Resource.Error(response.message())
+        return Resource.Error(responseApiModel.message())
     }
+
 
     private suspend fun safeGetAllProductsCall() {
         allProducts.postValue(Resource.Loading())
@@ -70,7 +73,7 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    fun changeProductFavoriteStatus(product: Product) {
+    fun changeProductFavoriteStatus(product: ProductDomainModel) {
         viewModelScope.launch {
             if (product.favorite) {
                 product.favorite = !product.favorite
@@ -80,8 +83,6 @@ class ProductsViewModel @Inject constructor(
                 repository.addProductToFavorites(product)
             }
         }
-
     }
-
 
 }
