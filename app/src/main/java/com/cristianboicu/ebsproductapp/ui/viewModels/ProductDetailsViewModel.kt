@@ -55,4 +55,20 @@ class ProductDetailsViewModel @Inject constructor(
         return Resource.Error(response.message())
     }
 
+    fun changeProductFavoriteStatus(favorites: Boolean) {
+        _productDetails.value?.let { it ->
+            val productDomainModel = it.data?.asDomainModel()
+            productDomainModel?.let { product ->
+                product.favorite = favorites
+                viewModelScope.launch {
+                    if (!product.favorite) {
+                        repository.removeProductFromFavorites(product.id)
+                    } else {
+                        repository.addProductToFavorites(product)
+                    }
+                }
+            }
+        }
+    }
+
 }

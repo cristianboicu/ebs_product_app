@@ -1,15 +1,16 @@
 package com.cristianboicu.ebsproductapp.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ListView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.databinding.FragmentFavoritesBinding
 import com.cristianboicu.ebsproductapp.ui.MainActivity
@@ -28,19 +29,38 @@ class FavoritesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentFavoritesBinding.inflate(layoutInflater)
+        val menuHost: MenuHost = binding.layoutToolbar.toolbar
+
         setUpToolbar()
+        setUpToolbarMenu(menuHost)
 
         lvFavoriteProducts = binding.lvFavoritesProducts
         setUpListView()
 
-        viewModel.favoriteProducts.observe(viewLifecycleOwner) {
-            productsAdapter.submitList(it)
-            Log.d("FavoritesFragment", it.toString())
-        }
+        displayFavoriteProducts()
 
         return binding.root
+    }
+
+    private fun displayFavoriteProducts() {
+        viewModel.favoriteProducts.observe(viewLifecycleOwner) {
+            productsAdapter.submitList(it)
+        }
+    }
+
+    private fun setUpToolbarMenu(menuHost: MenuHost) {
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menu.findItem(R.id.favoritesFragment).icon =
+                    ContextCompat.getDrawable(requireActivity(), R.drawable.ic_full_heart)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return true
+            }
+        }, viewLifecycleOwner)
     }
 
     private fun setUpListView() {
@@ -54,9 +74,6 @@ class FavoritesFragment : Fragment() {
 
     private fun saveProductToFavorites(product: ProductDomainModel) {
         viewModel.changeProductFavoriteStatus(product)
-        Toast.makeText(context,
-            "Add ${product.name} to favorites",
-            Toast.LENGTH_SHORT).show()
     }
 
     private fun navigateToProductDetails(productId: Long) {

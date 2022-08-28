@@ -12,7 +12,7 @@ import com.cristianboicu.ebsproductapp.databinding.ItemProductBinding
 
 class ProductsAdapter(
     context: Context,
-    private val products: MutableList<ProductDomainModel>,
+    private var products: MutableList<ProductDomainModel>,
     val productClickListener: (productId: Long) -> Unit,
     val likeClickListener: (product: ProductDomainModel) -> Unit,
 ) :
@@ -58,6 +58,7 @@ class ProductsAdapter(
             productClickListener(product.id)
         }
         binding.btnLike.setOnClickListener {
+            it.isSelected = !it.isSelected
             likeClickListener(product)
         }
     }

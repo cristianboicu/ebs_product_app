@@ -13,6 +13,9 @@ interface ProductsDao {
     @Query("SELECT * from products")
     fun observeFavoriteProducts(): LiveData<List<ProductDomainModel>>
 
+    @Query("SELECT id from products")
+    fun observeFavoriteProductsIds(): LiveData<List<Long>>
+
     @Insert(onConflict = REPLACE)
     suspend fun addProductToFavorites(product: ProductDomainModel)
 

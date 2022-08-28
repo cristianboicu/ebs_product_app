@@ -8,6 +8,9 @@ class LocalDataSource @Inject constructor(private val productsDao: ProductsDao) 
     override fun observeFavoriteProducts(): LiveData<List<ProductDomainModel>> =
         productsDao.observeFavoriteProducts()
 
+    override fun observeFavoriteProductsIds(): LiveData<List<Long>> =
+        productsDao.observeFavoriteProductsIds()
+
     override suspend fun addProductToFavorites(product: ProductDomainModel) =
         productsDao.addProductToFavorites(product)
 

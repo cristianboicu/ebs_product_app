@@ -35,7 +35,14 @@ data class ProductApiModel(
     val mainImage: String,
 ) {
     fun asDomainModel(): ProductDomainModel {
-        return ProductDomainModel(id, name, categoryId = category.id, details, size, colour, price, mainImage)
+        return ProductDomainModel(id,
+            name,
+            categoryId = category.id,
+            details,
+            size,
+            colour,
+            price,
+            mainImage)
     }
 }
 
@@ -56,7 +63,7 @@ data class ProductDomainModel(
     val colour: String,
     val price: Int,
     val mainImage: String,
-    var favorite: Boolean = false
+    var favorite: Boolean = false,
 )
 
 data class ProductDetails(
@@ -71,7 +78,18 @@ data class ProductDetails(
     val mainImage: String,
     val images: List<ProductImage>,
     var favorite: Boolean = false,
-)
+) {
+    fun asDomainModel(): ProductDomainModel {
+        return ProductDomainModel(id,
+            name,
+            categoryId = category.id,
+            details,
+            size,
+            colour,
+            price,
+            mainImage)
+    }
+}
 
 data class Category(
     val name: String,

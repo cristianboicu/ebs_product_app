@@ -1,7 +1,6 @@
 package com.cristianboicu.ebsproductapp.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ListView
 import android.widget.Toast
@@ -29,7 +28,6 @@ class ProductsFragment : Fragment() {
     private lateinit var productsAdapter: ProductsAdapter
     private lateinit var lvProducts: ListView
     private lateinit var scrollListener: EndlessScrollListener
-    private val TAG = "ProductsFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,16 +43,20 @@ class ProductsFragment : Fragment() {
         setUpToolbarMenu(menuHost)
 
 
+        displayAllProducts()
+        viewModel.favoriteProducts.observe(viewLifecycleOwner) {
+        }
+        return binding.root
+    }
+
+    private fun displayAllProducts() {
         viewModel.allProducts.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
                     response.data?.let {
                         productsAdapter.submitList(it.results)
-
                         val totalPages = response.data.totalPages
                         scrollListener.setIsLastPage(viewModel.allProductsPage > totalPages)
-
-                        Log.d(TAG, "${viewModel.allProductsPage}")
                     }
                 }
                 is Resource.Loading -> {
@@ -66,8 +68,6 @@ class ProductsFragment : Fragment() {
                 }
             }
         }
-
-        return binding.root
     }
 
     private fun setUpToolbarMenu(menuHost: MenuHost) {
@@ -103,19 +103,15 @@ class ProductsFragment : Fragment() {
             ProductsAdapter(requireContext(),
                 mutableListOf(),
                 ::navigateToProductDetails,
-                ::saveProductToFavorites)
+                ::changeProductFavoriteStatus)
         lvProducts.apply {
             adapter = productsAdapter
             setOnScrollListener(scrollListener)
         }
     }
 
-    private fun saveProductToFavorites(product: ProductDomainModel) {
+    private fun changeProductFavoriteStatus(product: ProductDomainModel) {
         viewModel.changeProductFavoriteStatus(product)
-        productsAdapter.notifyDataSetChanged()
-        Toast.makeText(context,
-            "Add ${product.name} to favorites ${product.favorite}",
-            Toast.LENGTH_SHORT).show()
     }
 
     private fun navigateToProductDetails(productId: Long) {

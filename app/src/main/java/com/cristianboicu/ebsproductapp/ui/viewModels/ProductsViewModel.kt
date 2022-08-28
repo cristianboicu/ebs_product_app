@@ -3,6 +3,7 @@ package com.cristianboicu.ebsproductapp.ui.viewModels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.cristianboicu.ebsproductapp.Constants.QUERY_PAGE_SIZE
 import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
@@ -13,6 +14,7 @@ import com.cristianboicu.ebsproductapp.di.BaseApplication
 import com.cristianboicu.ebsproductapp.util.Resource
 import com.cristianboicu.ebsproductapp.util.Utils.hasInternetConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -27,7 +29,18 @@ class ProductsViewModel @Inject constructor(
 
     val allProducts: MutableLiveData<Resource<ProductsResponseDomainModel>> = MutableLiveData()
     var allProductsPage = 1
-    private var allProductsResponseApiModel: ProductsResponseDomainModel? = null
+    private var allProductsResponse: ProductsResponseDomainModel? = null
+
+    val favoriteProducts =
+        Transformations.map(repository.observeFavoriteProductsIds()) { favoriteList ->
+            viewModelScope.launch(Dispatchers.Default) {
+                allProducts.value?.data?.let {
+                    allProducts.postValue(Resource.Success(syncAllProductsWithFavorites(favoriteList,
+                        it)))
+                }
+            }
+            favoriteList
+        }
 
     init {
         getAllProducts()
@@ -37,19 +50,34 @@ class ProductsViewModel @Inject constructor(
         safeGetAllProductsCall()
     }
 
+    private fun syncAllProductsWithFavorites(
+        favoriteList: List<Long>?,
+        allProducts: ProductsResponseDomainModel,
+    ): ProductsResponseDomainModel {
+        favoriteList?.let {
+            allProducts.results.onEach {
+                it.favorite = favoriteList.contains(it.id)
+            }
+        }
+        return allProducts
+    }
+
     private fun handleAllProductsResponse(responseApiModel: Response<ProductsResponseApiModel>): Resource<ProductsResponseDomainModel> {
         if (responseApiModel.isSuccessful) {
             responseApiModel.body()?.let { productsResponse ->
                 allProductsPage++
-                val response = productsResponse.asDomainModel()
-                if (allProductsResponseApiModel == null) {
-                    allProductsResponseApiModel = response
+
+                val response = syncAllProductsWithFavorites(favoriteProducts.value,
+                    productsResponse.asDomainModel())
+
+                if (allProductsResponse == null) {
+                    allProductsResponse = response
                 } else {
-                    val oldProducts = allProductsResponseApiModel?.results
+                    val oldProducts = allProductsResponse?.results
                     val newProducts = response.results
                     oldProducts?.addAll(newProducts)
                 }
-                return Resource.Success(allProductsResponseApiModel ?: response)
+                return Resource.Success(allProductsResponse ?: response)
             }
         }
         return Resource.Error(responseApiModel.message())
@@ -75,14 +103,12 @@ class ProductsViewModel @Inject constructor(
 
     fun changeProductFavoriteStatus(product: ProductDomainModel) {
         viewModelScope.launch {
-            if (product.favorite) {
-                product.favorite = !product.favorite
+            product.favorite = !product.favorite
+            if (!product.favorite) {
                 repository.removeProductFromFavorites(productId = product.id)
             } else {
-                product.favorite = !product.favorite
                 repository.addProductToFavorites(product)
             }
         }
     }
-
 }

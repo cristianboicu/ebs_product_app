@@ -11,11 +11,11 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.ProductDetails
+import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.data.model.ProductImage
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductDetailsBinding
 import com.cristianboicu.ebsproductapp.ui.MainActivity
@@ -37,16 +37,22 @@ class ProductDetailsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentProductDetailsBinding.inflate(inflater)
+
         val menuHost: MenuHost = binding.layoutToolbar.toolbar
-
         val productId = ProductDetailsFragmentArgs.fromBundle(requireArguments()).productId
-
         val mainActivity = requireActivity() as MainActivity
+
         setUpToolbar(mainActivity)
         setUpToolbarMenu(menuHost)
         hideToolbarLogo(toolbar)
 
         viewModel.getProductDetails(productId)
+        showProductDetails()
+
+        return binding.root
+    }
+
+    private fun showProductDetails() {
         viewModel.productDetails.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
@@ -64,32 +70,40 @@ class ProductDetailsFragment : Fragment() {
                 }
             }
         }
-
-        return binding.root
     }
 
     private fun setUpToolbarMenu(menuHost: MenuHost) {
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.favoritesFragment -> {
-                        menuItem.isChecked = !menuItem.isChecked
-                        when (menuItem.isChecked) {
-                            true -> menuItem.icon =
-                                ContextCompat.getDrawable(requireActivity(),
-                                    R.drawable.ic_full_heart)
-                            false -> menuItem.icon =
-                                ContextCompat.getDrawable(requireActivity(), R.drawable.ic_heart)
-                        }
+                        toggleFavoriteIcon(menuItem)
+                        saveProductToFavorites(menuItem.isChecked)
                         true
                     }
                     else -> false
                 }
             }
         }, viewLifecycleOwner)
+    }
+
+    private fun saveProductToFavorites(favorites: Boolean) {
+        viewModel.changeProductFavoriteStatus(favorites)
+    }
+
+    private fun toggleFavoriteIcon(menuItem: MenuItem) {
+        menuItem.isChecked = !menuItem.isChecked
+        when (menuItem.isChecked) {
+            true -> menuItem.icon =
+                ContextCompat.getDrawable(requireActivity(),
+                    R.drawable.ic_full_heart)
+            false -> menuItem.icon =
+                ContextCompat.getDrawable(requireActivity(), R.drawable.ic_heart)
+        }
     }
 
     private fun setUpToolbar(mainActivity: MainActivity) {
@@ -129,13 +143,8 @@ class ProductDetailsFragment : Fragment() {
         binding.tvProductPriceSecond.text =
             String.format(requireContext().getString(R.string.product_price),
                 product.price.toString())
-        binding.tvProductDetailsSpecs.text = "response.data?.price"
-    }
-
-    private fun navigateToFavorites() {
-        findNavController().navigate(
-            ProductDetailsFragmentDirections.showFavorites()
-        )
+        binding.tvProductDetailsSpecs.text = product.size
+        binding.layoutToolbar.toolbar.menu.findItem(R.id.favoritesFragment).isChecked = product.favorite
     }
 
 }

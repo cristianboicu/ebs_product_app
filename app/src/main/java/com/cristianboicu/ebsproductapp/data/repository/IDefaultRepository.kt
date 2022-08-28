@@ -7,9 +7,13 @@ import com.cristianboicu.ebsproductapp.data.model.ProductsResponseApiModel
 import retrofit2.Response
 
 interface IDefaultRepository {
+
     suspend fun getAllProducts(page: Int, pageSize: Int): Response<ProductsResponseApiModel>
     suspend fun getProductDetails(productId: Long): Response<ProductDetails>
     fun observeFavoriteProducts(): LiveData<List<ProductDomainModel>>
+
+    fun observeFavoriteProductsIds(): LiveData<List<Long>>
     suspend fun addProductToFavorites(product: ProductDomainModel)
     suspend fun removeProductFromFavorites(productId: Long)
+
 }

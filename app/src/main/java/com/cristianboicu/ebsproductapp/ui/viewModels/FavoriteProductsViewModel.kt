@@ -17,11 +17,10 @@ class FavoriteProductsViewModel @Inject constructor(private val repository: IDef
 
     fun changeProductFavoriteStatus(product: ProductDomainModel) {
         viewModelScope.launch {
-            if (product.favorite) {
-                product.favorite = !product.favorite
+            product.favorite = !product.favorite
+            if (!product.favorite) {
                 repository.removeProductFromFavorites(productId = product.id)
             } else {
-                product.favorite = !product.favorite
                 repository.addProductToFavorites(product)
             }
         }
