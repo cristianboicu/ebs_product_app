@@ -15,4 +15,9 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@color/toolbar_status_bar</item>
+        <item name="android:navigationBarColor">@color/toolbar_status_bar</item>
+    </style>
 </resources>
