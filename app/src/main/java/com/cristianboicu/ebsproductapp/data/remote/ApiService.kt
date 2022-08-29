@@ -1,5 +1,6 @@
 package com.cristianboicu.ebsproductapp.data.remote
 
+import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import com.cristianboicu.ebsproductapp.data.model.ProductDetails
 import com.cristianboicu.ebsproductapp.data.model.ProductsResponseApiModel
 import retrofit2.Response
@@ -14,7 +15,7 @@ interface ApiService {
         @Query("page")
         pageNumber: Int = 1,
         @Query("page_size")
-        pageSize: Int = 10,
+        pageSize: Int = PAGE_SIZE,
     ): Response<ProductsResponseApiModel>
 
     @GET("/products/{id}")

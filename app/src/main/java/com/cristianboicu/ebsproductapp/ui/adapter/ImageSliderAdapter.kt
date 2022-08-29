@@ -33,14 +33,14 @@ class ImageSliderAdapter(private val context: Context, private var imageList: Li
         }
 
 
-        val vp = container as ViewPager
-        vp.addView(view, 0)
+        val viewPager = container as ViewPager
+        viewPager.addView(view, 0)
         return view
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        val vp = container as ViewPager
+        val viewPager = container as ViewPager
         val view = `object` as View
-        vp.removeView(view)
+        viewPager.removeView(view)
     }
 }
