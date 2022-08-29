@@ -1,7 +1,6 @@
 package com.cristianboicu.ebsproductapp.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
@@ -15,7 +14,6 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.ProductDetails
-import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.data.model.ProductImage
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductDetailsBinding
 import com.cristianboicu.ebsproductapp.ui.MainActivity
@@ -40,23 +38,24 @@ class ProductDetailsFragment : Fragment() {
 
         val menuHost: MenuHost = binding.layoutToolbar.toolbar
         val productId = ProductDetailsFragmentArgs.fromBundle(requireArguments()).productId
+        val productFavoriteStatus = ProductDetailsFragmentArgs.fromBundle(requireArguments()).productFavoriteStatus
         val mainActivity = requireActivity() as MainActivity
 
         setUpToolbar(mainActivity)
-        setUpToolbarMenu(menuHost)
+        setUpToolbarMenu(menuHost, productFavoriteStatus)
         hideToolbarLogo(toolbar)
 
         viewModel.getProductDetails(productId)
-        showProductDetails()
-
+        showProductDetails(productFavoriteStatus)
         return binding.root
     }
 
-    private fun showProductDetails() {
+    private fun showProductDetails(productFavoriteStatus: Boolean) {
         viewModel.productDetails.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
                     response.data?.let { product ->
+                        product.favorite = productFavoriteStatus
                         fillProductDetails(product)
                         setUpPager(product.images as MutableList<ProductImage>)
                     }
@@ -72,10 +71,13 @@ class ProductDetailsFragment : Fragment() {
         }
     }
 
-    private fun setUpToolbarMenu(menuHost: MenuHost) {
+    private fun setUpToolbarMenu(menuHost: MenuHost, productFavoriteStatus: Boolean) {
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-
+                if (productFavoriteStatus){
+                    menu.findItem(R.id.favoritesFragment).icon =
+                        ContextCompat.getDrawable(requireActivity(), R.drawable.ic_full_heart)
+                }
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -144,7 +146,8 @@ class ProductDetailsFragment : Fragment() {
             String.format(requireContext().getString(R.string.product_price),
                 product.price.toString())
         binding.tvProductDetailsSpecs.text = product.size
-        binding.layoutToolbar.toolbar.menu.findItem(R.id.favoritesFragment).isChecked = product.favorite
+        binding.layoutToolbar.toolbar.menu.findItem(R.id.favoritesFragment).isChecked =
+            product.favorite
     }
 
 }

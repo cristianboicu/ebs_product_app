@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cristianboicu.ebsproductapp.data.model.ProductDetails
+import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
 import com.cristianboicu.ebsproductapp.di.BaseApplication
 import com.cristianboicu.ebsproductapp.util.Resource
@@ -56,19 +57,24 @@ class ProductDetailsViewModel @Inject constructor(
     }
 
     fun changeProductFavoriteStatus(favorites: Boolean) {
-        _productDetails.value?.let { it ->
-            val productDomainModel = it.data?.asDomainModel()
-            productDomainModel?.let { product ->
-                product.favorite = favorites
-                viewModelScope.launch {
-                    if (!product.favorite) {
-                        repository.removeProductFromFavorites(product.id)
-                    } else {
-                        repository.addProductToFavorites(product)
-                    }
+        val product = convertProductsDetailsToDomainModel()
+
+        product?.let {
+            it.favorite = favorites
+            viewModelScope.launch {
+                if (!it.favorite) {
+                    repository.removeProductFromFavorites(it.id)
+                } else {
+                    repository.addProductToFavorites(it)
                 }
             }
         }
     }
 
+    private fun convertProductsDetailsToDomainModel(): ProductDomainModel? {
+        _productDetails.value?.data?.let {
+            return it.asDomainModel()
+        }
+        return null
+    }
 }

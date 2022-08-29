@@ -13,7 +13,7 @@ import com.cristianboicu.ebsproductapp.databinding.ItemProductBinding
 class ProductsAdapter(
     context: Context,
     private var products: MutableList<ProductDomainModel>,
-    val productClickListener: (productId: Long) -> Unit,
+    val productClickListener: (productId: Long, productFavoriteStatus: Boolean) -> Unit,
     val likeClickListener: (product: ProductDomainModel) -> Unit,
 ) :
     ArrayAdapter<ProductDomainModel>(context, R.layout.item_product, products) {
@@ -55,7 +55,7 @@ class ProductsAdapter(
         binding.btnLike.isSelected = product.favorite
 
         binding.root.setOnClickListener {
-            productClickListener(product.id)
+            productClickListener(product.id, product.favorite)
         }
         binding.btnLike.setOnClickListener {
             it.isSelected = !it.isSelected

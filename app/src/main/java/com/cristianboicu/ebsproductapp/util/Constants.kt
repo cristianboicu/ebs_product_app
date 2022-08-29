@@ -1,4 +1,4 @@
-package com.cristianboicu.ebsproductapp
+package com.cristianboicu.ebsproductapp.util
 
 object Constants {
     const val BASE_URL = "http://mobile-shop-api.hiring.devebs.net"

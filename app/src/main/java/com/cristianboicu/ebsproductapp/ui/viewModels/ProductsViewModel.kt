@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import com.cristianboicu.ebsproductapp.Constants.QUERY_PAGE_SIZE
+import com.cristianboicu.ebsproductapp.util.Constants.QUERY_PAGE_SIZE
 import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.data.model.ProductsResponseApiModel
 import com.cristianboicu.ebsproductapp.data.model.ProductsResponseDomainModel

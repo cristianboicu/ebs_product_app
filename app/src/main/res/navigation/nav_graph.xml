@@ -23,6 +23,9 @@
         <argument
             android:name="product_id"
             app:argType="long" />
+        <argument
+            android:name="product_favorite_status"
+            app:argType="boolean" />
         <action
             android:id="@+id/showFavorites"
             app:destination="@id/favoritesFragment" />

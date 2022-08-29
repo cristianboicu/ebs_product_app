@@ -3,7 +3,6 @@ package com.cristianboicu.ebsproductapp.ui.fragments
 import android.os.Bundle
 import android.view.*
 import android.widget.ListView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -68,17 +67,17 @@ class FavoritesFragment : Fragment() {
             ProductsAdapter(requireContext(),
                 mutableListOf(),
                 ::navigateToProductDetails,
-                ::saveProductToFavorites)
+                ::changeProductFavoriteStatus)
         lvFavoriteProducts.adapter = productsAdapter
     }
 
-    private fun saveProductToFavorites(product: ProductDomainModel) {
+    private fun changeProductFavoriteStatus(product: ProductDomainModel) {
         viewModel.changeProductFavoriteStatus(product)
     }
 
-    private fun navigateToProductDetails(productId: Long) {
+    private fun navigateToProductDetails(productId: Long, productFavoriteStatus: Boolean) {
         findNavController().navigate(
-            FavoritesFragmentDirections.showProductDetails(productId)
+            FavoritesFragmentDirections.showProductDetails(productId, productFavoriteStatus)
         )
     }
 

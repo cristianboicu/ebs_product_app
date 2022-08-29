@@ -9,7 +9,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.cristianboicu.ebsproductapp.EndlessScrollListener
+import com.cristianboicu.ebsproductapp.ui.adapter.EndlessScrollListener
 import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductsBinding
@@ -114,9 +114,9 @@ class ProductsFragment : Fragment() {
         viewModel.changeProductFavoriteStatus(product)
     }
 
-    private fun navigateToProductDetails(productId: Long) {
+    private fun navigateToProductDetails(productId: Long, productFavoriteStatus: Boolean) {
         findNavController().navigate(
-            ProductsFragmentDirections.showProductDetails(productId)
+            ProductsFragmentDirections.showProductDetails(productId, productFavoriteStatus)
         )
     }
 

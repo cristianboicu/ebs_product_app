@@ -2,7 +2,7 @@ package com.cristianboicu.ebsproductapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.cristianboicu.ebsproductapp.Constants.BASE_URL
+import com.cristianboicu.ebsproductapp.util.Constants.BASE_URL
 import com.cristianboicu.ebsproductapp.data.local.LocalDataSource
 import com.cristianboicu.ebsproductapp.data.local.ProductsDao
 import com.cristianboicu.ebsproductapp.data.local.ProductsDatabase
