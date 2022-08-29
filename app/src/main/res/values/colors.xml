@@ -9,8 +9,14 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="toolbar_status_bar">#182867</color>
+    <color name="product_name">#182867</color>
     <color name="cart_bar_color">#7740A2</color>
     <color name="line_color">#E5EBE9</color>
     <color name="transparent_line">#26FFFFFF</color>
     <color name="default_dot">#40FFFFFF</color>
+    <color name="product_details">#424A56</color>
+    <color name="product_price">#035A97</color>
+    <color name="product_price_second">#9CB1BC</color>
+    <color name="floating_cart_counter">#141515</color>
+    <color name="button_background_tint">#182867</color>
 </resources>

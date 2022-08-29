@@ -13,7 +13,7 @@ import com.cristianboicu.ebsproductapp.ui.adapter.EndlessScrollListener
 import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductsBinding
-import com.cristianboicu.ebsproductapp.ui.MainActivity
+import com.cristianboicu.ebsproductapp.ui.activities.MainActivity
 import com.cristianboicu.ebsproductapp.ui.adapter.ProductsAdapter
 import com.cristianboicu.ebsproductapp.ui.viewModels.ProductsViewModel
 import com.cristianboicu.ebsproductapp.util.Resource
@@ -44,8 +44,7 @@ class ProductsFragment : Fragment() {
 
 
         displayAllProducts()
-        viewModel.favoriteProducts.observe(viewLifecycleOwner) {
-        }
+        observeFavoriteProducts()
         return binding.root
     }
 
@@ -67,6 +66,11 @@ class ProductsFragment : Fragment() {
                         Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun observeFavoriteProducts() {
+        viewModel.favoriteProducts.observe(viewLifecycleOwner) {
         }
     }
 

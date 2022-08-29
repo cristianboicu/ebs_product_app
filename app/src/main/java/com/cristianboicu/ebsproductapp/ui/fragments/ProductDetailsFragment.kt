@@ -16,7 +16,7 @@ import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.ProductDetails
 import com.cristianboicu.ebsproductapp.data.model.ProductImage
 import com.cristianboicu.ebsproductapp.databinding.FragmentProductDetailsBinding
-import com.cristianboicu.ebsproductapp.ui.MainActivity
+import com.cristianboicu.ebsproductapp.ui.activities.MainActivity
 import com.cristianboicu.ebsproductapp.ui.adapter.ImageSliderAdapter
 import com.cristianboicu.ebsproductapp.ui.viewModels.ProductDetailsViewModel
 import com.cristianboicu.ebsproductapp.util.Resource

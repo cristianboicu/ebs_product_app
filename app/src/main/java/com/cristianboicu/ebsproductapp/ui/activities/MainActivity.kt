@@ -1,4 +1,4 @@
-package com.cristianboicu.ebsproductapp.ui
+package com.cristianboicu.ebsproductapp.ui.activities
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
-
 
     fun setUpToolBar(
         toolbar: Toolbar,

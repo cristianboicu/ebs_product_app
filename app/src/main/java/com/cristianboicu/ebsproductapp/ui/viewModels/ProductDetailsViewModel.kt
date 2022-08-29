@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.ProductDetails
 import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
-    app: Application,
+    val app: Application,
     private val repository: IDefaultRepository,
 ) :
     AndroidViewModel(app) {
@@ -37,12 +38,12 @@ class ProductDetailsViewModel @Inject constructor(
                 val response = repository.getProductDetails(productId)
                 _productDetails.postValue(handleProductDetailsResponse(response))
             } else {
-                _productDetails.postValue(Resource.Error("No internet connection!"))
+                _productDetails.postValue(Resource.Error(app.getString(R.string.no_internet_connection)))
             }
         } catch (t: Throwable) {
             when (t) {
-                is IOException -> _productDetails.postValue(Resource.Error("Network failure!"))
-                else -> _productDetails.postValue(Resource.Error("Conversion error!"))
+                is IOException -> _productDetails.postValue(Resource.Error(app.getString(R.string.network_failure)))
+                else -> _productDetails.postValue(Resource.Error(app.getString(R.string.conversion_error)))
             }
         }
     }

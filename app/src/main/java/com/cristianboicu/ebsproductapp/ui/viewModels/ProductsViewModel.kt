@@ -5,12 +5,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import com.cristianboicu.ebsproductapp.util.Constants.QUERY_PAGE_SIZE
+import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.data.model.ProductsResponseApiModel
 import com.cristianboicu.ebsproductapp.data.model.ProductsResponseDomainModel
 import com.cristianboicu.ebsproductapp.data.repository.IDefaultRepository
 import com.cristianboicu.ebsproductapp.di.BaseApplication
+import com.cristianboicu.ebsproductapp.util.Constants.QUERY_PAGE_SIZE
 import com.cristianboicu.ebsproductapp.util.Resource
 import com.cristianboicu.ebsproductapp.util.Utils.hasInternetConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductsViewModel @Inject constructor(
-    app: Application,
+    val app: Application,
     private val repository: IDefaultRepository,
 ) :
     AndroidViewModel(app) {
@@ -91,12 +92,12 @@ class ProductsViewModel @Inject constructor(
                 val response = repository.getAllProducts(allProductsPage, QUERY_PAGE_SIZE)
                 allProducts.postValue(handleAllProductsResponse(response))
             } else {
-                allProducts.postValue(Resource.Error("No internet connection!"))
+                allProducts.postValue(Resource.Error(app.getString(R.string.no_internet_connection)))
             }
         } catch (t: Throwable) {
             when (t) {
-                is IOException -> allProducts.postValue(Resource.Error("Network failure!"))
-                else -> allProducts.postValue(Resource.Error("Conversion error!"))
+                is IOException -> allProducts.postValue(Resource.Error(app.getString(R.string.network_failure)))
+                else -> allProducts.postValue(Resource.Error(app.getString(R.string.conversion_error)))
             }
         }
     }

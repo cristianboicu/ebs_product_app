@@ -3,32 +3,32 @@
 
     <style name="productNameFeedPage">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#07195C</item>
+        <item name="android:textColor">@color/product_name</item>
         <item name="fontFamily">@font/open_sans_extra_bold</item>
     </style>
 
     <style name="productNameDetailsPage">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">#07195C</item>
+        <item name="android:textColor">@color/product_name</item>
         <item name="fontFamily">@font/open_sans_extra_bold</item>
     </style>
 
     <style name="productDetails">
         <item name="android:textSize">12sp</item>
         <item name="fontFamily">@font/open_sans_regular</item>
-        <item name="android:textColor">#424A56</item>
+        <item name="android:textColor">@color/product_details</item>
     </style>
 
     <style name="productPrice">
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/open_sans_semi_bold</item>
-        <item name="android:textColor">#035A97</item>
+        <item name="android:textColor">@color/product_price</item>
     </style>
 
     <style name="productPriceSecond">
         <item name="android:textSize">11sp</item>
         <item name="fontFamily">@font/open_sans_semi_bold</item>
-        <item name="android:textColor">#9CB1BC</item>
+        <item name="android:textColor">@color/product_price_second</item>
     </style>
 
     <style name="floatingCart">
@@ -43,14 +43,14 @@
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center</item>
         <item name="fontFamily">@font/open_sans_bold</item>
-        <item name="android:textColor">#141515</item>
+        <item name="android:textColor">@color/floating_cart_counter</item>
     </style>
 
     <style name="actionFilters">
         <item name="android:textSize">12sp</item>
         <item name="android:textAllCaps">true</item>
         <item name="fontFamily">@font/open_sans_semi_bold</item>
-        <item name="android:textColor">#07195C</item>
+        <item name="android:textColor">@color/product_name</item>
     </style>
 
     <style name="verticalLine">
@@ -64,16 +64,15 @@
         <item name="android:fontFamily">@font/open_sans_semi_bold</item>
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">#07195C</item>
+        <item name="android:textColor">@color/product_name</item>
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="favoritesCounter" parent="floatingCartCounter">
+    <style name="favoritesCounter">
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/bg_round_orange</item>
         <item name="android:textSize">11sp</item>
         <item name="android:fontFamily">@font/open_sans_bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
-
 </resources>

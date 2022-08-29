@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.cristianboicu.ebsproductapp.R
 import com.cristianboicu.ebsproductapp.data.model.ProductDomainModel
 import com.cristianboicu.ebsproductapp.databinding.FragmentFavoritesBinding
-import com.cristianboicu.ebsproductapp.ui.MainActivity
+import com.cristianboicu.ebsproductapp.ui.activities.MainActivity
 import com.cristianboicu.ebsproductapp.ui.adapter.ProductsAdapter
 import com.cristianboicu.ebsproductapp.ui.viewModels.FavoriteProductsViewModel
 import dagger.hilt.android.AndroidEntryPoint
